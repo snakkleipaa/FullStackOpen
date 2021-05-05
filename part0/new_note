@@ -26,3 +26,4 @@ end note
 
 browser -> server : HTTP GET https://studies.cs.helsinki.fi/favicon.ico
 server -> browser : favicon.ico
+
