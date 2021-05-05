@@ -1,0 +1,8 @@
+browser -> server : HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+instead of loading the page again, the new note is added to the list in JSON format
+does not trigger getting the HTML-file again
+end note
+
+server -> browser : JSON 
