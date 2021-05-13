@@ -1,4 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import personService from './services/persons'
+import Notification from './components/Notification'
+import Error from './components/Error'
+import axios from 'axios'
+import { create } from 'istanbul-reports'
+import { render } from '@testing-library/react'
 
 const Filter = ({ filter, handleFilterChange }) => {
   return (
@@ -24,48 +30,36 @@ const PersonForm = ({ addNameNumber, newName, handleNameChange, newNumber, handl
   )
 }
 
-const Person = ({ person }) => {
+const Person = ({ person, handleDelete }) => {
   return (
-    <div>{person.name} {person.number} </div>
+    <div>
+      {person.name} {person.number} <button onClick={handleDelete}>delete</button>
+    </div>
   )
 }
 
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
+
+  useEffect(() => {
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
+      })
+  }, [])
 
   const [ newName, setNewName ] = useState('')
   const [ names, setNames ] = useState(persons.map(person =>
     person.name))
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ notificationMessage, setNotificationMessage ] = useState(null)
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
-  }
-
-  const addNameNumber = (event) => {
-    event.preventDefault()
-    const personObject = {
-      name: newName,
-      number: newNumber
-    }
-
-    const copy = [ ...names]
-
-    if (copy.includes(personObject.name)) {
-      window.alert(`${newName} is already added to phonebook`)
-    }else {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
-      copy.push(personObject.name)
-      setNames(copy)
-    }
   }
 
   const handleNumberChange = (event) => {
@@ -76,6 +70,59 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDelete = (id) => {
+    const person = persons.find(p => p.id === id)
+    const confirm = window.confirm(`Delete ${person.name}?`)
+    if (confirm) {
+      personService
+        .remove(id)
+    }
+  }
+  
+
+  const addNameNumber = (event) => {
+    event.preventDefault()
+    const personObject = {
+      name: newName,
+      number: newNumber
+    }
+
+    if (persons.map(person => person.name).includes(personObject.name)) {
+      const confirm = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      if (confirm) {
+        const foundPerson = persons.find(p => p.name === newName)
+        const changedPerson = { ...foundPerson, number: newNumber }
+        personService
+          .update(foundPerson.id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== foundPerson.id ? person : returnedPerson))
+            setNewName('')
+            setNewNumber('')
+          })
+          .catch(error => {
+            setErrorMessage(`Information of ${changedPerson.name} has already been removed from server`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000);
+          })
+      }
+    }else {
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNotificationMessage(
+            `Added ${returnedPerson.name}`
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000);
+          setNewName('')
+          setNewNumber('')
+        })
+    }
+  }
+
   const personsToShow = filter === ''
     ? persons
     : persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase()))
@@ -83,6 +130,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={notificationMessage} />
+      <Error message={errorMessage} />
 
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
@@ -98,7 +148,10 @@ const App = () => {
       <h2>Numbers</h2>
       <div>
       {personsToShow.map(person => 
-        <Person key={person.name} person={person} />
+        <Person 
+          key={person.name} 
+          person={person} 
+          handleDelete={() => handleDelete(person.id)}/>
       )}
       </div>
     </div>
