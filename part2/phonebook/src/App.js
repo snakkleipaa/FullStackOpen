@@ -100,11 +100,13 @@ const App = () => {
             setNewNumber('')
           })
           .catch(error => {
-            setErrorMessage(`Information of ${changedPerson.name} has already been removed from server`)
+            setErrorMessage(`${error.response.data.error}`)
             setTimeout(() => {
               setErrorMessage(null)
             }, 5000);
           })
+      }else {
+        setErrorMessage(`Number update cancelled`)
       }
     }else {
       personService
@@ -119,6 +121,12 @@ const App = () => {
           }, 5000);
           setNewName('')
           setNewNumber('')
+        })
+        .catch(error => {
+          setErrorMessage(`${error.response.data.error}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000);
         })
     }
   }
