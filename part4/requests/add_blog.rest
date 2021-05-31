@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhwYWFra28iLCJpZCI6IjYwYjBhMGQ1MDI3NmNjNDg1MDg4YzJkYSIsImlhdCI6MTYyMjQ1MTQ1NH0.Aadt5DpJgS7lEZHt__PLlo9iNOJbw11JsA-VBgZYHgU
+
+{
+    "title": "Token testing",
+    "author": "Test Testington",
+    "url": "www.testtoken.com",
+    "likes": 12,
+    "userId": "60b0a0d50276cc485088c2da"
+}
