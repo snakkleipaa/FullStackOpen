@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhwYWFra28iLCJpZCI6IjYwYjBhMGQ1MDI3NmNjNDg1MDg4YzJkYSIsImlhdCI6MTYyMzA0NTQzNn0.Fs9U2KVsff5JK3i5LMlZy2z6W9Lyd2qUsdPEaklHt9k
+
+{
+    "title": "100 problems",
+    "author": "Me, myself and I",
+    "url": "www.help.com",
+    "likes": 12
+}
