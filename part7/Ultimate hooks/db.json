@@ -1,0 +1,53 @@
+{
+  "notes": [
+    {
+      "content": "custom-hooks are grat",
+      "id": 1
+    },
+    {
+      "content": "the best featrure ever <3",
+      "id": 2
+    },
+    {
+      "content": "amazing hooks",
+      "id": 3
+    },
+    {
+      "content": "updating pages sucks",
+      "id": 4
+    },
+    {
+      "content": "halp",
+      "id": 5
+    },
+    {
+      "content": "are you updating",
+      "id": 6
+    },
+    {
+      "content": "oof man",
+      "id": 7
+    },
+    {
+      "content": "states mess me up",
+      "id": 8
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "kaltsoon",
+      "number": "045-2323456",
+      "id": 2
+    },
+    {
+      "name": "santa",
+      "number": "12-2425-1212",
+      "id": 3
+    }
+  ]
+}

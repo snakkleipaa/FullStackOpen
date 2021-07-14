@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/blogs/60b638bdaf073a706c5ee07d/comments
+Content-Type: application/json
+
+{
+    "content": "shoutout pls"
+}
