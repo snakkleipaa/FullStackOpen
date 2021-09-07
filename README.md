@@ -1,5 +1,12 @@
-<h1>Full Stack course exercises 2021</h1>
+# Full Stack -course 2021
 
-<h2>Course provided by University of Helsinki</h2>
-  
-Most of the exercises done using React or Node or combination of both
+Exercises done for the Full Stack development -course provided by University of Helsinki.
+
+## Development
+
+Most of the exercises here are done by using React, Nodejs or combination of those two.
+
+## Usage
+
+Mostly here to submit exercises during the course. 
+Feel free to reference to the code to see the type of code I have created.
